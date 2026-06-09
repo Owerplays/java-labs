@@ -1,0 +1,22 @@
+package lab1;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class FibonacciMemo {
+    private static Map<Integer, Long> cache = new HashMap<>();
+    
+    public static long fib(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        if (cache.containsKey(n)) return cache.get(n);
+        
+        long result = fib(n - 1) + fib(n - 2);
+        cache.put(n, result);
+        return result;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(fib(27));
+    }
+}
