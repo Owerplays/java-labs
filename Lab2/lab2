@@ -1,0 +1,70 @@
+package lab2;
+
+import java.io.*;
+import java.util.*;
+
+public class BinaryStudent {
+    
+    static class Student implements Serializable {
+        private static final long serialVersionUID = 1L;
+        String name;
+        int age;
+        double grade;
+        
+        Student(String name, int age, double grade) {
+            this.name = name;
+            this.age = age;
+            this.grade = grade;
+        }
+        
+        @Override
+        public String toString() {
+            return String.format("Студент: %s, возраст: %d, оценка: %.2f", name, age, grade);
+        }
+    }
+    
+    public static void writeStudents(String filename, List<Student> students) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            oos.writeObject(students);
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static List<Student> readStudents(String filename) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            return (List<Student>) ois.readObject();
+        }
+    }
+    
+    public static void main(String[] args) {
+        String filename = "students.bin";
+        List<Student> students = new ArrayList<>();
+        
+        String[] names = {"Анна", "Борис", "Виктор", "Галина", "Дмитрий", "Елена", "Жанна", 
+                          "Захар", "Ирина", "Константин", "Лариса", "Михаил", "Наталья", 
+                          "Олег", "Полина", "Роман", "Светлана", "Тимофей", "Ульяна", 
+                          "Федор", "Христина", "Цветан", "Чеслава", "Шамиль", "Щербан", 
+                          "Эдуард", "Юлия"};
+        
+        Random rand = new Random();
+        for (int i = 0; i < 27; i++) {
+            int age = 18 + rand.nextInt(10);
+            double grade = 3 + rand.nextDouble() * 2;
+            students.add(new Student(names[i], age, grade));
+        }
+        
+        try {
+            writeStudents(filename, students);
+            System.out.println("27 студентов записаны в файл: " + filename);
+            
+            List<Student> readStudents = readStudents(filename);
+            System.out.println("\nПрочитано из файла:");
+            for (Student s : readStudents) {
+                System.out.println(s);
+            }
+            
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+    }
+}
