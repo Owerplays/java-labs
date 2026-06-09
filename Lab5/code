@@ -1,0 +1,38 @@
+package lab5;
+
+public class QuadraticVieta {
+    
+    public static void solveQuadratic(double a, double b, double c) {
+        if (a == 0) {
+            System.out.println("Это не квадратное уравнение (a = 0)");
+            return;
+        }
+        
+        double discriminant = b * b - 4 * a * c;
+        
+        if (discriminant < 0) {
+            System.out.println("Действительных корней нет");
+            return;
+        }
+        
+        double x1, x2;
+        if (discriminant == 0) {
+            x1 = x2 = -b / (2 * a);
+            System.out.println("Один корень: x = " + x1);
+        } else {
+            double sqrtD = Math.sqrt(discriminant);
+            x1 = (-b - sqrtD) / (2 * a);
+            x2 = (-b + sqrtD) / (2 * a);
+            System.out.println("Корни уравнения:");
+            System.out.println("x1 = " + x1 + ", x2 = " + x2);
+        }
+        
+        System.out.println("\nПроверка по теореме Виета:");
+        System.out.println("x1 + x2 = " + (x1 + x2) + " (должно быть -b/a = " + (-b / a) + ")");
+        System.out.println("x1 * x2 = " + (x1 * x2) + " (должно быть c/a = " + (c / a) + ")");
+    }
+    
+    public static void main(String[] args) {
+        solveQuadratic(1, 5, 6);
+    }
+}
