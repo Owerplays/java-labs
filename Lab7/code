@@ -1,0 +1,39 @@
+package lab31;
+
+import java.util.Arrays;
+
+public class BubbleSortVisual {
+    
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        
+        System.out.println("Исходный массив: " + Arrays.toString(arr));
+        System.out.println();
+        
+        for (int i = 0; i < n - 1; i++) {
+            System.out.println("Проход " + (i + 1) + ":");
+            
+            for (int j = 0; j < n - i - 1; j++) {
+                System.out.print("  Сравнение (" + arr[j] + " " + arr[j + 1] + "): ");
+                
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    System.out.println(arr[j + 1] + " <-> " + arr[j] + " -> " + Arrays.toString(arr));
+                } else {
+                    System.out.println("обмена нет");
+                }
+            }
+            System.out.println("Результат прохода " + (i + 1) + ": " + Arrays.toString(arr));
+            System.out.println();
+        }
+        
+        System.out.println("Отсортированный массив: " + Arrays.toString(arr));
+    }
+    
+    public static void main(String[] args) {
+        int[] arr = {33, 66, 99, 11, 44, 77, 22, 55, 88};
+        bubbleSort(arr);
+    }
+}
